@@ -3,12 +3,14 @@ import { getFirebase } from "react-redux-firebase";
 
 export const socialLogin = () => async (dispatch) => {
   try {
+    //Fireabase signIn/signUp with popup.
     const firebase = getFirebase();
     const user = await firebase.login({
       provider: "google",
       type: "popup",
     });
 
+    // Storing user information in firestore
     if (user !== undefined && user.additionalUserInfo.isNewUser) {
       await firebase
         .firestore()
@@ -23,7 +25,8 @@ export const socialLogin = () => async (dispatch) => {
         });
     }
 
-    history.push("/main");
+    // After successful sign in redirect user to main page
+    history.push("/");
   } catch (error) {
     console.log(error);
   }

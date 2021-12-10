@@ -2,15 +2,17 @@ import React, { useState } from "react";
 import useAsyncEffect from "use-async-effect";
 import { getFirebase } from "react-redux-firebase";
 import { Divider, List } from "@material-ui/core";
-
 import UserListItem from "./UserListItem";
+import { connect } from "react-redux";
 
+// Get all the users from firestre DB.
 const getUsers = async () => {
   const firestore = getFirebase().firestore();
   const userRef = firestore.collection("users");
   try {
+    // The Query will list the all the users in the firestore DB.
     let query;
-    query = userRef.limit(10);
+    query = userRef;
 
     const querySnap = await query.get();
     let users = [];
@@ -30,8 +32,9 @@ const getUsers = async () => {
 
 const UserList = (props) => {
   const [users, setusers] = useState([]);
-  const [usersStatus, setusersStatus] = useState({});
+  const { auth } = props;
 
+  // On component mount get all the users.
   useAsyncEffect(async (isMounted) => {
     const userDocs = await getUsers();
 
@@ -46,8 +49,12 @@ const UserList = (props) => {
         {users &&
           users.map((user) => (
             <div key={user.id}>
-              <UserListItem user={user} />
-              <Divider />
+              {user.id !== auth?.uid && (
+                <>
+                  <UserListItem user={user} />
+                  <Divider />
+                </>
+              )}
             </div>
           ))}
       </List>
@@ -55,4 +62,8 @@ const UserList = (props) => {
   );
 };
 
-export default UserList;
+const mapStateToProps = (state) => {
+  return { auth: state.firebase.auth };
+};
+
+export default connect(mapStateToProps)(UserList);

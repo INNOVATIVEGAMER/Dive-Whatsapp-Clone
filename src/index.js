@@ -11,8 +11,10 @@ import { Router } from "react-router-dom";
 import history from "./history";
 import { ReactReduxFirebaseProvider } from "react-redux-firebase";
 
+// Creating store for redux
 const store = configureStore();
 
+// Setting up firebase to connect with react
 const rrfConfig = {
   userProfile: "users",
   attachAuthReady: true,
@@ -29,7 +31,6 @@ const rrfProps = {
 ReactDOM.render(
   <Provider store={store}>
     <Router history={history}>
-      {/* <ScrollToTop /> */}
       <ReactReduxFirebaseProvider {...rrfProps}>
         <App />
       </ReactReduxFirebaseProvider>

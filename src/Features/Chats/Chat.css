@@ -4,12 +4,8 @@
   flex-direction: column;
 }
 
-.chat-room-name {
+.chat-opposite-user {
   margin: 0px;
-}
-
-.chat-room-last-seen {
-  margin: 0;
 }
 
 .chat_header {
@@ -31,12 +27,6 @@
 
 .chat_headerInfo > p {
   color: gray;
-}
-
-.chat_headerRight {
-  display: flex;
-  justify-content: space-between;
-  min-width: 100px;
 }
 
 .chat_body {
@@ -64,13 +54,16 @@
   font-size: xx-small;
 }
 
-.chat_timestemp {
+.chat_status {
+  position: relative;
   margin-left: 10px;
   font-size: xx-small;
+  top: 10px;
 }
 
 .chat_receiver {
   margin-left: auto;
+  padding-top: 2px;
   background-color: #dcf8c6;
 }
 
